@@ -1,1 +1,484 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text to Image Generator</title>
+  <style>
+/* *{
+    border: 2px solid black;
+  }*/
+  
+  
+  body{
+    display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 20px;
+      padding-bottom: 150px;
+      position: relative;
+      
+      /*border: 2px solid black;*/
+  }
+  form{
+    
+  }
+  
+   #input-area{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 98%;
+      
+      
+    }
+    
+    
+    
+    
+    h1{
+      margin-bottom: 40px;
+      font-size: 30px;
+    }
+    
+    
+    h1::after{
+      content: """";
+      display: block;
+      background-color: mediumorchid;
+      width: 30%;
+      height: 3px;
+      justify-self: center;
+      margin-top: 10px;
+    }
+    
+    
+    #prompt-input{
+      height: 37px;
+      padding: 0 18px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      outline: 1.4px solid black;
+    }
+    
+    
+    #generate-btn{
+      height: 40px;
+      font-size: 15px;
+      padding: 0 10px;
+      color: white;
+      background-color: purple;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    #image-display-area{
+      /*border: 2px solid black;*/
+      width: 99%;
+      display: flex;
+      flex-direction: column;
+      min-height: 40vh;
+      margin-top: 20px;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+    
+    #inner-div1{
+      /*border: 2px solid black;*/
+      width: 99%;
+      height: 450px;
+      border-radius: 7px;
+      margin-bottom: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    #inner-img1{
+      /*border: 2px solid black;*/
+      width: 97%;
+      height: 350px;
+      border-radius: 10px;
+     /* margin-bottom: 20px;*/
+    }
+    
+    
+    .btn{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 5px;
+      /*outline: 2px solid mediumorchid;
+    */  border: 2px solid black;
+    padding: 6px 10px;
+    margin: 10px 2px;
+    width: 97%;
+    }
+    
+    
+    #inner-div2{
+      /*border: 2px solid black;*/
+      width: 99%;
+      height: 450px;
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    
+     #inner-img2{
+     /* border: 2px solid black;*/
+      width: 97%;
+      height: 350px;
+      border-radius: 7px;
+    }
+    
+    
+    
+    hr{
+      margin-top: 70px;
+    }
+    
+    
+   
+   #footer{
+     width: 100%;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+    position: absolute;
+    bottom: 0px;
+    color: purple;
+   } 
+    
+    
+    
+    
+  
+    
+    /*Smaller Screens Adjustments*/
+    @media(max-width: 700px){ 
+    
+    h1::after{
+      
+      margin-bottom: 20px;
+      
+    }
+    
+    
+    
+    }
+    
+    /* Larger screens*/
+    
+   @media(min-width: 700px){
+     #input-area{
+      
+      width: 62%;
+      
+    }
+    
+    h1{
+      margin-bottom: 80px;
+    }
+    
+    h1::after{
+      
+      width: 40%;
+      height: 5px;
+      
+    }
+    
+    
+     form{
+       
+      width: 100%;
+     }
+     
+     
+     #prompt-input{
+       height: 50px;
+      width: 80%;
+      padding: 0 28px;
+      font-size: 19px;
+    }
+    
+    
+    #generate-btn{
+      height: 53px;
+      width: 25%;
+      font-size: 20px;
+      
+    }
+    
+    
+    #image-dissplay-area{
+      
+      flex-direction: row;
+      margin-top: 100px;
+    }
+    
+    #inner-div1{
+      /*border: 2px solid black;*/
+      
+      margin-bottom: 0px;
+    }
+    
+    #inner-img1{
+      
+      width: 97%;
+      margin-bottom: 0;
+    }
+    
+     #inner-div2{
+      /*border: 2px solid black;*/
+      
+    }
+    
+    
+     #inner-img2{
+  
+      width: 97%;
+    }
+    
+    
+    
+    
+    
+   }
+    
+  </style>
+</head>
+<body>
+   <h1>Image Generator</h1>
+  <div id="input-area">
+   
+  <form>
+    <input id="prompt-input" type="text" placeholder="Enter your text prompt...">
+  </form>
+  <button id="generate-btn">Generate</button>
+  </div>
+  
+  <div id="image-display-area">
+    <!--
+    <div id="inner-div1">
+    <img id="inner-img1" src="1.jpg" alt="First image">
+    
+   <button class="btn">
+
+<svg width="60px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.5535 16.5061C12.4114 16.6615 12.2106 16.75 12 16.75C11.7894 16.75 11.5886 16.6615 11.4465 16.5061L7.44648 12.1311C7.16698 11.8254 7.18822 11.351 7.49392 11.0715C7.79963 10.792 8.27402 10.8132 8.55352 11.1189L11.25 14.0682V3C11.25 2.58579 11.5858 2.25 12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V14.0682L15.4465 11.1189C15.726 10.8132 16.2004 10.792 16.5061 11.0715C16.8118 11.351 16.833 11.8254 16.5535 12.1311L12.5535 16.5061Z" fill="black"/>
+<path d="M3.75 15C3.75 14.5858 3.41422 14.25 3 14.25C2.58579 14.25 2.25 14.5858 2.25 15V15.0549C2.24998 16.4225 2.24996 17.5248 2.36652 18.3918C2.48754 19.2919 2.74643 20.0497 3.34835 20.6516C3.95027 21.2536 4.70814 21.5125 5.60825 21.6335C6.47522 21.75 7.57754 21.75 8.94513 21.75H15.0549C16.4225 21.75 17.5248 21.75 18.3918 21.6335C19.2919 21.5125 20.0497 21.2536 20.6517 20.6516C21.2536 20.0497 21.5125 19.2919 21.6335 18.3918C21.75 17.5248 21.75 16.4225 21.75 15.0549V15C21.75 14.5858 21.4142 14.25 21 14.25C20.5858 14.25 20.25 14.5858 20.25 15C20.25 16.4354 20.2484 17.4365 20.1469 18.1919C20.0482 18.9257 19.8678 19.3142 19.591 19.591C19.3142 19.8678 18.9257 20.0482 18.1919 20.1469C17.4365 20.2484 16.4354 20.25 15 20.25H9C7.56459 20.25 6.56347 20.2484 5.80812 20.1469C5.07435 20.0482 4.68577 19.8678 4.40901 19.591C4.13225 19.3142 3.9518 18.9257 3.85315 18.1919C3.75159 17.4365 3.75 16.4354 3.75 15Z" fill="black"/>
+</svg>
+</button>
+
+    </div>
+    
+    <div id="inner-div2">
+    <img id="inner-img2" src="1.jpg" alt="Second image">
+   
+   <button class="btn">
+
+<svg width="60px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.5535 16.5061C12.4114 16.6615 12.2106 16.75 12 16.75C11.7894 16.75 11.5886 16.6615 11.4465 16.5061L7.44648 12.1311C7.16698 11.8254 7.18822 11.351 7.49392 11.0715C7.79963 10.792 8.27402 10.8132 8.55352 11.1189L11.25 14.0682V3C11.25 2.58579 11.5858 2.25 12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V14.0682L15.4465 11.1189C15.726 10.8132 16.2004 10.792 16.5061 11.0715C16.8118 11.351 16.833 11.8254 16.5535 12.1311L12.5535 16.5061Z" fill="black"/>
+<path d="M3.75 15C3.75 14.5858 3.41422 14.25 3 14.25C2.58579 14.25 2.25 14.5858 2.25 15V15.0549C2.24998 16.4225 2.24996 17.5248 2.36652 18.3918C2.48754 19.2919 2.74643 20.0497 3.34835 20.6516C3.95027 21.2536 4.70814 21.5125 5.60825 21.6335C6.47522 21.75 7.57754 21.75 8.94513 21.75H15.0549C16.4225 21.75 17.5248 21.75 18.3918 21.6335C19.2919 21.5125 20.0497 21.2536 20.6517 20.6516C21.2536 20.0497 21.5125 19.2919 21.6335 18.3918C21.75 17.5248 21.75 16.4225 21.75 15.0549V15C21.75 14.5858 21.4142 14.25 21 14.25C20.5858 14.25 20.25 14.5858 20.25 15C20.25 16.4354 20.2484 17.4365 20.1469 18.1919C20.0482 18.9257 19.8678 19.3142 19.591 19.591C19.3142 19.8678 18.9257 20.0482 18.1919 20.1469C17.4365 20.2484 16.4354 20.25 15 20.25H9C7.56459 20.25 6.56347 20.2484 5.80812 20.1469C5.07435 20.0482 4.68577 19.8678 4.40901 19.591C4.13225 19.3142 3.9518 18.9257 3.85315 18.1919C3.75159 17.4365 3.75 16.4354 3.75 15Z" fill="black"/>
+</svg>
+</button>
+
+    </div>-->
+  </div>
+  
+  <div id="footer">
+  <hr width="300">
+  <h3>All Rights Reserved &copy; 2025</h3>
+  </div>
+  
+  
+  
+  <script>
+    
+
+    let promptInput = document.getElementById("prompt-input")
+    let generateBtn = document.getElementById("generate-btn")
+    let imageDisplayArea = document.getElementById("image-display-area")
+    
+    
+    // From getimg.ai's API
+    let API_KEY = "AIzaSyCODX26wsePmZg9RHQbdQNuk032vGqLrDQ"
+    
+    
+    /*
+    curl --request GET \
+     --url https://api.getimg.ai/v1/models \
+     --header 'accept: application/json'
+    */
+    
+    
+  
+    
+    
+    function base64ToBlob(base64String, contentType = 'image/png') {
+      
+    let byteCharacters = atob(base64String);
+    
+    let byteArrays = [];
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteArrays.push(byteCharacters.charCodeAt(i));
+    }
+
+    let byteArray = new Uint8Array(byteArrays);
+    return new Blob([byteArray], { type: contentType });
+}
+    
+
+
+
+
+    
+    
+    
+    
+   async function getImageRequest(prompt){
+     
+     try{
+       
+     //https://api.freepik.com/v1/ai/mystic
+     
+     //https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${API_KEY}
+     
+     let response= await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${API_KEY}`, {
+       
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json"
+       },
+       body: JSON.stringify({
+    "contents": [{
+      "parts": [
+        {"text": `Generate a photo realistic image from the following prompt: ${prompt}`}
+      ]
+    }],
+    "generationConfig":{"responseModalities":["Text","Image"]}
+  })
+    
+       
+     })
+     
+     let data = await response.json()
+     console.log(data)
+     
+     
+     
+     
+     
+     let base64Data = data.candidates[0].content.parts[0].inlineData.data
+     
+     
+     // Remove metadata prefix if present 
+//const base64Image = base64Data.replace(/^data:image/png;base64,/, "");
+
+// Create a Blob from Base64 
+//const blob = base64ToBlob(base64Data);
+let blob = base64ToBlob(base64Data)
+
+// Create a download link 
+let link = document.createElement('a'); 
+//let img = document.createElement('img'); 
+
+/*
+img.width = "200"
+img.height = "200"
+img.style.borderRadius = "15px"
+*/
+
+
+
+imageDisplayArea.innerHTML = `<div id="inner-div1">
+    <img id="inner-img1" src="${URL.createObjectURL(blob)}" alt="First image">
+    
+   <button class="btn">
+
+<svg width="60px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.5535 16.5061C12.4114 16.6615 12.2106 16.75 12 16.75C11.7894 16.75 11.5886 16.6615 11.4465 16.5061L7.44648 12.1311C7.16698 11.8254 7.18822 11.351 7.49392 11.0715C7.79963 10.792 8.27402 10.8132 8.55352 11.1189L11.25 14.0682V3C11.25 2.58579 11.5858 2.25 12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V14.0682L15.4465 11.1189C15.726 10.8132 16.2004 10.792 16.5061 11.0715C16.8118 11.351 16.833 11.8254 16.5535 12.1311L12.5535 16.5061Z" fill="black"/>
+<path d="M3.75 15C3.75 14.5858 3.41422 14.25 3 14.25C2.58579 14.25 2.25 14.5858 2.25 15V15.0549C2.24998 16.4225 2.24996 17.5248 2.36652 18.3918C2.48754 19.2919 2.74643 20.0497 3.34835 20.6516C3.95027 21.2536 4.70814 21.5125 5.60825 21.6335C6.47522 21.75 7.57754 21.75 8.94513 21.75H15.0549C16.4225 21.75 17.5248 21.75 18.3918 21.6335C19.2919 21.5125 20.0497 21.2536 20.6517 20.6516C21.2536 20.0497 21.5125 19.2919 21.6335 18.3918C21.75 17.5248 21.75 16.4225 21.75 15.0549V15C21.75 14.5858 21.4142 14.25 21 14.25C20.5858 14.25 20.25 14.5858 20.25 15C20.25 16.4354 20.2484 17.4365 20.1469 18.1919C20.0482 18.9257 19.8678 19.3142 19.591 19.591C19.3142 19.8678 18.9257 20.0482 18.1919 20.1469C17.4365 20.2484 16.4354 20.25 15 20.25H9C7.56459 20.25 6.56347 20.2484 5.80812 20.1469C5.07435 20.0482 4.68577 19.8678 4.40901 19.591C4.13225 19.3142 3.9518 18.9257 3.85315 18.1919C3.75159 17.4365 3.75 16.4354 3.75 15Z" fill="black"/>
+</svg>
+</button>
+
+    </div>`
+
+
+
+
+
+
+
+link.innerHTML = "Link"
+link.href = URL.createObjectURL(blob); 
+/*img.src = URL.createObjectURL(blob);*/
+
+link.download = './output.png'; 
+
+document.body.appendChild(link); 
+link.click(); 
+/*document.body.appendChild(img); */
+
+//document.body.removeChild(link);
+
+console.log('PNG image downloaded successfully.');
+
+     }catch(error){
+       console.log(error)
+     }
+   }
+    
+    
+    
+   // getImageRequest()
+    
+    
+    
+    generateBtn.addEventListener("click", ()=>{
+      
+      imageDisplayArea.innerHTML = "Processing, please wait..."
+      getImageRequest(promptInput.value)
+      
+    })
+    
+    
+    
+    
+    
+    
+    
+    /*
+    // Base64 string (replace this with your own Base64 data) 
+    const base64Data = "iVBORw0KGgoAAAANSUhEUgAA..."; // Truncated example
+
+// Convert Base64 to a Blob 
+function base64ToBlob(base64, contentType = 'image/png') { const byteCharacters = atob(base64); const byteArrays = []; for (let i = 0; i < byteCharacters.length; i += 512) { const slice = byteCharacters.slice(i, i + 512); const byteNumbers = new Array(slice.length); for (let j = 0; j < slice.length; j++) { byteNumbers[j] = slice.charCodeAt(j); } byteArrays.push(new Uint8Array(byteNumbers)); } return new Blob(byteArrays, { type: contentType }); }
+
+// Remove metadata prefix if present 
+const base64Image = base64Data.replace(/^data:image/png;base64,/, "");
+
+// Create a Blob from Base64 
+const blob = base64ToBlob(base64Image);
+
+// Create a download link 
+const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'output.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
+
+console.log('PNG image downloaded successfully.');
+
+*/
+  </script>
+</body>
+  </html>
