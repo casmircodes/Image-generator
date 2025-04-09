@@ -41,6 +41,10 @@
     h1{
       margin-bottom: 40px;
       font-size: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     
     
@@ -89,7 +93,7 @@
     #inner-div1{
       /*border: 2px solid black;*/
       width: 99%;
-      height: 450px;
+      min-height: 450px;
       border-radius: 7px;
       margin-bottom: 5px;
       display: flex;
@@ -184,7 +188,7 @@
      #input-area{
       
       width: 62%;
-      
+       
     }
     
     h1{
@@ -225,19 +229,32 @@
       
       flex-direction: row;
       margin-top: 100px;
+
     }
     
     #inner-div1{
       /*border: 2px solid black;*/
       
       margin-bottom: 0px;
+       min-height: 650px;
     }
-    
+
+
+
     #inner-img1{
       
-      width: 97%;
+      width: 66%;
+      height: 500px;
       margin-bottom: 0;
     }
+
+
+    .btn{
+      
+    width: 66%;
+    }
+
+
     
      #inner-div2{
       /*border: 2px solid black;*/
@@ -312,9 +329,10 @@
     let imageDisplayArea = document.getElementById("image-display-area")
     
     
-    // From getimg.ai's API
-    let API_KEY = "AIzaSyCODX26wsePmZg9RHQbdQNuk032vGqLrDQ"
     
+    // From Gemini AI's API
+    let API_KEY = "AIzaSyCODX26wsePmZg9RHQbdQNuk032vGqLrDQ"
+    let url = ""
     
     /*
     curl --request GET \
@@ -391,8 +409,7 @@
 //const blob = base64ToBlob(base64Data);
 let blob = base64ToBlob(base64Data)
 
-// Create a download link 
-let link = document.createElement('a'); 
+ 
 //let img = document.createElement('img'); 
 
 /*
@@ -401,12 +418,12 @@ img.height = "200"
 img.style.borderRadius = "15px"
 */
 
-
+imageUrl = URL.createObjectURL(blob)
 
 imageDisplayArea.innerHTML = `<div id="inner-div1">
-    <img id="inner-img1" src="${URL.createObjectURL(blob)}" alt="First image">
+    <img id="inner-img1" src="${imageUrl}" alt="First image">
     
-   <button class="btn">
+   <button id="download-btn" onclick="downloadImg()" class="btn">
 
 <svg width="60px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M12.5535 16.5061C12.4114 16.6615 12.2106 16.75 12 16.75C11.7894 16.75 11.5886 16.6615 11.4465 16.5061L7.44648 12.1311C7.16698 11.8254 7.18822 11.351 7.49392 11.0715C7.79963 10.792 8.27402 10.8132 8.55352 11.1189L11.25 14.0682V3C11.25 2.58579 11.5858 2.25 12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V14.0682L15.4465 11.1189C15.726 10.8132 16.2004 10.792 16.5061 11.0715C16.8118 11.351 16.833 11.8254 16.5535 12.1311L12.5535 16.5061Z" fill="black"/>
@@ -422,19 +439,13 @@ imageDisplayArea.innerHTML = `<div id="inner-div1">
 
 
 
-link.innerHTML = "Link"
-link.href = URL.createObjectURL(blob); 
+ 
 /*img.src = URL.createObjectURL(blob);*/
 
-link.download = './output.png'; 
 
-document.body.appendChild(link); 
-link.click(); 
 /*document.body.appendChild(img); */
 
-//document.body.removeChild(link);
 
-console.log('PNG image downloaded successfully.');
 
      }catch(error){
        console.log(error)
@@ -458,27 +469,29 @@ console.log('PNG image downloaded successfully.');
     
     
     
+
+
+
+
+
+    function downloadImg(){
+      // Create a download link 
+    let link = document.createElement('a');
+
+
+    link.innerHTML = "Link"
+    link.href = imageUrl;
+
+    link.download = './output.png'; 
+
+    document.body.appendChild(link); 
+    link.click(); 
+
+    document.body.removeChild(link);
+    console.log('PNG image downloaded successfully.');
+    }
     
     
-    /*
-    // Base64 string (replace this with your own Base64 data) 
-    const base64Data = "iVBORw0KGgoAAAANSUhEUgAA..."; // Truncated example
-
-// Convert Base64 to a Blob 
-function base64ToBlob(base64, contentType = 'image/png') { const byteCharacters = atob(base64); const byteArrays = []; for (let i = 0; i < byteCharacters.length; i += 512) { const slice = byteCharacters.slice(i, i + 512); const byteNumbers = new Array(slice.length); for (let j = 0; j < slice.length; j++) { byteNumbers[j] = slice.charCodeAt(j); } byteArrays.push(new Uint8Array(byteNumbers)); } return new Blob(byteArrays, { type: contentType }); }
-
-// Remove metadata prefix if present 
-const base64Image = base64Data.replace(/^data:image/png;base64,/, "");
-
-// Create a Blob from Base64 
-const blob = base64ToBlob(base64Image);
-
-// Create a download link 
-const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'output.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
-
-console.log('PNG image downloaded successfully.');
-
-*/
   </script>
 </body>
   </html>
