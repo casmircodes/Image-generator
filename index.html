@@ -440,6 +440,7 @@ imageDisplayArea.innerHTML = `<div id="inner-div1">
     generateBtn.addEventListener("click", ()=>{
       
       imageDisplayArea.innerHTML = "Processing, please wait..."
+      imageDisplayArea.style.color = "black"
       getImageRequest(promptInput.value)
       
     })
