@@ -334,11 +334,6 @@
     let API_KEY = "AIzaSyCODX26wsePmZg9RHQbdQNuk032vGqLrDQ"
     let url = ""
     
-    /*
-    curl --request GET \
-     --url https://api.getimg.ai/v1/models \
-     --header 'accept: application/json'
-    */
     
     
   
@@ -370,8 +365,7 @@
      
      try{
        
-     //https://api.freepik.com/v1/ai/mystic
-     
+    
      //https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${API_KEY}
      
      let response= await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${API_KEY}`, {
@@ -402,21 +396,10 @@
      let base64Data = data.candidates[0].content.parts[0].inlineData.data
      
      
-     // Remove metadata prefix if present 
-//const base64Image = base64Data.replace(/^data:image/png;base64,/, "");
-
-// Create a Blob from Base64 
-//const blob = base64ToBlob(base64Data);
+    
 let blob = base64ToBlob(base64Data)
 
  
-//let img = document.createElement('img'); 
-
-/*
-img.width = "200"
-img.height = "200"
-img.style.borderRadius = "15px"
-*/
 
 imageUrl = URL.createObjectURL(blob)
 
@@ -439,16 +422,12 @@ imageDisplayArea.innerHTML = `<div id="inner-div1">
 
 
 
- 
-/*img.src = URL.createObjectURL(blob);*/
-
-
-/*document.body.appendChild(img); */
-
 
 
      }catch(error){
        console.log(error)
+       imageDisplayArea.innerHTML = "Something went wrong"
+       imageDisplayArea.style.color = "red"
      }
    }
     
